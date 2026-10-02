@@ -1,28 +1,52 @@
-# Etapa 3 — Extensão com a moeda de R$ 2,00
+# Etapa 4 — Análise de uma solução alternativa
 
-Criei o `Moeda2ReaisHandler` e a `MainEtapa3`, que monta a mesma cadeia da
-`Main` com mais um responsável no final. Não mexi em nenhuma classe que já existia.
+## Solução analisada
 
-**1. Qual classe foi criada para tratar a nova moeda?**
+Outro desenvolvedor fez o processamento direto na `MaquinaDeVendas` com um
+`se/senão se` pra cada moeda:
 
-`Moeda2ReaisHandler`
+```java
+if (moeda == 5) {
+    // processa
+} else if (moeda == 10) {
+    // processa
+} else if (moeda == 25) {
+    // processa
+} else if (moeda == 50) {
+    // processa
+} else if (moeda == 100) {
+    // processa
+} else {
+    // moeda não aceita
+}
+```
 
-**2. Como essa classe foi incorporada à cadeia?**
+## Análise
 
-Com mais um `setProximo(new Moeda2ReaisHandler())` no fim da montagem na `MainEtapa3`
+**1. Qual é o principal problema quando novos valores de moeda precisam ser adicionados?**
 
-**3. Por que foi possível adicionar o novo responsável sem modificar os existentes?**
+Toda moeda nova obriga a abrir a `MaquinaDeVendas` e colocar mais um `else if`. Isso viola o Aberto/Fechado, porque não dá pra estender sem modificar
 
-Cada responsável só conhece o `MoedaHandler` do próximo e não a classe concreta. Quem monta a cadeia é o cliente então os outros nem ficam sabendo que tem um novo
+**2. Qual classe fica responsável por conhecer todos os tipos de moeda?**
 
-**4. O que aconteceria se fosse necessário adicionar mais cinco valores diferentes de moeda?**
+A própria `MaquinaDeVendas`
 
-Seriam cinco classes novas, cada uma só com o `valor()`, e cinco linhas na montagem da cadeia. O resto continua igual
+**3. Como o crescimento da quantidade de valores aceitos pode afetar essa classe?**
 
-**5. Como a solução com Chain of Responsibility se comportaria em comparação com uma única classe com vários if/else?**
+Ela vai virando uma classe gigante. Além dos produtos, do saldo e do troco ainda guarda a lista de moedas, e cada moeda nova deixa ela mais difícil de ler. Um erro numa moeda pode quebrar as outras. Isso também afeta a Responsabilidade Única
 
-No `if/else` cada moeda nova é mais um `else if` na mesma classe e ela só cresce. Na cadeia cada valor fica na sua classe e dá pra ler e testar sozinho
+**4. Como o Chain of Responsibility distribui essa responsabilidade?**
 
-**6. O que aconteceria se o processamento de cada valor estivesse dentro da classe da máquina de vendas?**
+Cada `else if` vira uma classe. O `moeda == 25` virou o `Moeda25CentavosHandler` e a máquina só entrega a moeda pra cadeia
 
-A `MaquinaDeVendas` teria que conhecer todas as moedas além de cuidar dos produtos, do saldo e do troco. Moeda nova ia obrigar a mexer nela
+**5. Qual é o papel do encaminhamento da solicitação no padrão?**
+
+É o que liga os responsáveis e quem não sabe tratar passa pro próximo sem saber quem ele é, e o cliente só entrega a moeda pro primeiro sem saber quem vai tratar
+
+**6. O que significa dizer que cada responsável possui uma responsabilidade específica?**
+
+Cada handler só decide sobre um valor de moeda, então o de 50 centavos não sabe nada do de 1 real por exemplo
+
+**7. A cadeia precisa conter todos os tipos de moeda conhecidos pelo sistema? O que acontece quando nenhum responsável processa a moeda?**
+
+Não precisa, por conta que o cliente monta a cadeia e pode usar só as moedas que quiser. E se ninguém trata a moeda ela chega no fim da cadeia e o `processar` devolve 0, e a máquina avisa que a moeda não foi aceita e não soma nada no saldo
