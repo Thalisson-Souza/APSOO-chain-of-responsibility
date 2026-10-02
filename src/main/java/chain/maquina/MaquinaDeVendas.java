@@ -19,6 +19,12 @@ public class MaquinaDeVendas {
     }
 
     public void cadastrarProduto(String nome, int precoEmCentavos) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("O nome do produto é obrigatório.");
+        }
+        if (precoEmCentavos <= 0) {
+            throw new IllegalArgumentException("O preço deve ser maior que zero.");
+        }
         produtos.put(nome, precoEmCentavos);
     }
 
@@ -36,6 +42,9 @@ public class MaquinaDeVendas {
     }
 
     public boolean inserirMoeda(int centavos) {
+        if (selecionado == null) {
+            return false;
+        }
         int aceito = cadeia.processar(centavos);
         inserido += aceito;
         return aceito > 0;
@@ -51,6 +60,13 @@ public class MaquinaDeVendas {
 
     public boolean pago() {
         return inserido >= getPreco();
+    }
+
+    public int cancelar() {
+        int devolvido = inserido;
+        selecionado = null;
+        inserido = 0;
+        return devolvido;
     }
 
     public int liberar() {

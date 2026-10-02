@@ -43,12 +43,17 @@ public class Main {
             System.out.println();
             System.out.println("Inserido: " + dinheiro(maquina.getInserido())
                     + " de " + dinheiro(maquina.getPreco()));
-            System.out.print("Moeda em centavos: ");
+            System.out.print("Moeda em centavos (ou 'cancelar'): ");
             if (!entrada.hasNextLine()) {
                 return;
             }
+            String resposta = entrada.nextLine().trim();
+            if (resposta.equalsIgnoreCase("cancelar")) {
+                System.out.println("Compra cancelada. Valor devolvido: " + dinheiro(maquina.cancelar()));
+                return;
+            }
             try {
-                int moeda = Integer.parseInt(entrada.nextLine().trim());
+                int moeda = Integer.parseInt(resposta);
                 if (!maquina.inserirMoeda(moeda)) {
                     System.out.println("Moeda de " + dinheiro(moeda) + " não aceita.");
                 }

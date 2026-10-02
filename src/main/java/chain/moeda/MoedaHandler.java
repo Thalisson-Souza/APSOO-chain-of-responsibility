@@ -8,7 +8,14 @@ public abstract class MoedaHandler {
         return proximo;
     }
 
-    public abstract int processar(int centavos);
+    protected abstract int valor();
+
+    public int processar(int centavos) {
+        if (centavos == valor()) {
+            return centavos;
+        }
+        return encaminhar(centavos);
+    }
 
     protected int encaminhar(int centavos) {
         if (proximo == null) {
