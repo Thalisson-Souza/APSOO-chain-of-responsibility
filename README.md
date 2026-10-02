@@ -1,5 +1,7 @@
 # Etapa 3 — Extensão com a moeda de R$ 2,00
 
+Commit da extensão: [ver commit](https://github.com/Thalisson-Souza/APSOO-chain-of-responsibility/commit/2859bd1)
+
 Criei o `Moeda2ReaisHandler` e a `MainEtapa3`, que monta a mesma cadeia da
 `Main` com mais um responsável no final. Não mexi em nenhuma classe que já existia.
 
@@ -26,3 +28,7 @@ No `if/else` cada moeda nova é mais um `else if` na mesma classe e ela só cres
 **6. O que aconteceria se o processamento de cada valor estivesse dentro da classe da máquina de vendas?**
 
 A `MaquinaDeVendas` teria que conhecer todas as moedas além de cuidar dos produtos, do saldo e do troco. Moeda nova ia obrigar a mexer nela
+
+## Próxima etapa
+
+[v4 — análise de uma solução alternativa](https://github.com/Thalisson-Souza/APSOO-chain-of-responsibility/tree/v4)
