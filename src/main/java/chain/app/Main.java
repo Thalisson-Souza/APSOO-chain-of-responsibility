@@ -11,7 +11,6 @@ import chain.moeda.MoedaHandler;
 import java.util.Map;
 import java.util.Scanner;
 
-/** Client: monta a cadeia e conduz a compra pelo terminal. */
 public class Main {
     public static void main(String[] args) {
         MoedaHandler cadeia = new Moeda5CentavosHandler();

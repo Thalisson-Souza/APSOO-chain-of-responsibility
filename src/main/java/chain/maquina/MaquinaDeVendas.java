@@ -5,7 +5,6 @@ import chain.moeda.MoedaHandler;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Usa a cadeia de moedas para acumular o valor e liberar o produto. */
 public class MaquinaDeVendas {
     private final MoedaHandler cadeia;
     private final Map<String, Integer> produtos = new LinkedHashMap<>();

@@ -1,6 +1,5 @@
 package chain.moeda;
 
-/** ConcreteHandler que processa moedas de 25 centavos. */
 public class Moeda25CentavosHandler extends MoedaHandler {
     @Override
     public int processar(int centavos) {

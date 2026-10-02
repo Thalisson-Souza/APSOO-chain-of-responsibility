@@ -1,6 +1,5 @@
 package chain.moeda;
 
-/** Handler do padrão Chain of Responsibility. */
 public abstract class MoedaHandler {
     private MoedaHandler proximo;
 
