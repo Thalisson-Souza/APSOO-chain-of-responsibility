@@ -35,7 +35,6 @@ public class MaquinaDeVendas {
         return true;
     }
 
-    /** Devolve false quando nenhum responsável da cadeia aceita a moeda. */
     public boolean inserirMoeda(int centavos) {
         int aceito = cadeia.processar(centavos);
         inserido += aceito;
@@ -54,7 +53,6 @@ public class MaquinaDeVendas {
         return inserido >= getPreco();
     }
 
-    /** Libera o produto e devolve o troco em centavos. */
     public int liberar() {
         int troco = inserido - getPreco();
         selecionado = null;
